@@ -1,11 +1,11 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Literal
 
-class HeatEquationInput(BaseModel):
-    alpha: float           # Thermal diffusivity
-    length: float          # Domain length (e.g., 1 meter)
-    nx: int                # Spatial grid points (e.g., 100)
-    nt: int                # Time steps (e.g., 500)
-    dt: float              # Time step size
-    initial_condition: List[float]  # u(x,0) as array
-    boundary_conditions: dict       # E.g., {"left": 0.0, "right": 0.0}
+class AdvectionEquationInput(BaseModel):
+    a: float                         # скорость переноса
+    length: float                    # длина области
+    nx: int                          # число узлов по x
+    nt: int                          # число шагов по времени
+    dt: float                        # шаг по времени
+    initial_condition: List[float]   # u(x, 0)
+    boundary_condition: float        # значение u на левом краю (x=0)
