@@ -1,11 +1,11 @@
 from pydantic import BaseModel
-from typing import List, Literal
+from typing import List
 
 class AdvectionEquationInput(BaseModel):
-    a: float                         # скорость переноса
-    length: float                    # длина области
-    nx: int                          # число узлов по x
-    nt: int                          # число шагов по времени
-    dt: float                        # шаг по времени
-    initial_condition: List[float]   # u(x, 0)
-    boundary_condition: float        # значение u на левом краю (x=0)
+    c: float               # Скорость переноса (латинская 'c')
+    length: float          # Длина области
+    nx: int                # Количество узлов по пространству
+    nt: int                # Количество временных шагов
+    dt: float              # Шаг по времени
+    initial_condition: List[float]  # Начальное условие u(x,0)
+    boundary_conditions: dict       # Граничные условия, например, {"left": 0.0}

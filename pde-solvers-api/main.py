@@ -4,30 +4,31 @@ import numpy as np
 from schemas import AdvectionEquationInput
 from solvers.advection_equation import solve_advection_equation
 import plotly.graph_objects as go
-import base64
 
-app = FastAPI(title="PDE Solver API")
+app = FastAPI(title="Advection Solver API")
 
-@app.post("/solve/heat-equation/")
-async def solve_advection(params: AdvectionEquationInput): # asynchronous call to computing server
-    # Convert input to NumPy
+@app.post("/solve/advection-equation/")
+async def solve_advection_eq(params: AdvectionEquationInput):
+    # Конвертируем входные данные в NumPy
     u0 = np.array(params.initial_condition)
     
-    # Solve PDE
+    # Решаем уравнение адвекции
     solution = solve_advection_equation(
-        a=params.a,
+        c=params.c,
         length=params.length,
         nx=params.nx,
         nt=params.nt,
         dt=params.dt,
         initial_condition=u0,
-        bc=params.boundary_condition
+        bc=params.boundary_conditions
     )
 
+    # Генерируем визуализацию с помощью Plotly
     fig = go.Figure(data=[go.Surface(z=solution.T)])
-    fig.update_layout(title="Advection Equation (Upwind Scheme)")
+    fig.update_layout(title="Advection Equation Solution")
     plot_html = fig.to_html(full_html=False)
 
+    # Возвращаем решение и визуализацию
     return {
         "solution": solution.tolist(),
         "visualization": plot_html
