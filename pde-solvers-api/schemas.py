@@ -9,3 +9,4 @@ class AdvectionEquationInput(BaseModel):
     dt: float              # Шаг по времени
     initial_condition: List[float]  # Начальное условие u(x,0)
     boundary_conditions: dict       # Граничные условия, например, {"left": 0.0}
+    method: str = "tvd"  # По умолчанию TVD, также поддерживает "upwind", "lax_wendroff"
